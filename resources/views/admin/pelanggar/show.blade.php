@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Show Pelanggar</title>
+@extends('mainLayouts')
+
+@section('content')
     <style type="text/css">
         table {
             border-collapse: collapse;
@@ -19,11 +16,10 @@
             padding-right: 20px;
         }
     </style>
-</head>
-<body>
 
+<div class="container">
 <h1>Detail Pelanggar</h1>
-<a href="{{ route('pelanggar.index') }}">Kembali</a>
+<a href="{{ route('pelanggar.index') }}" class="btn btn-secondary">Kembali</a>
 
 <table>
     <tr>
@@ -102,7 +98,7 @@
                 <input type="hidden" name="id_pelanggar" value="{{ $pelanggar->id }}">
                 <input type="hidden" name="id_user" value="{{ $idUser }}">
                 <input type="hidden" name="id_pelanggaran" value="{{ $pelanggaran->id }}">
-                <button type="submit">Tambah Pelanggaran</button>
+                <button type="submit" class="btn btn-success">Tambah Pelanggaran</button>
             </form>
         </td>
     </tr>
@@ -120,7 +116,7 @@
     @endforelse
 </table>
 
-{{ $pelanggarans->links() }}
 
-</body>
-</html>
+{{ $pelanggarans->links() }}
+</div>
+@endsection

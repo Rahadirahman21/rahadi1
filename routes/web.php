@@ -37,7 +37,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/pelanggar/storePelanggaran', [PelanggarController::class, 'storePelanggaran'])->name('pelanggar.storePelanggaran');
     Route::put('/admin/pelanggar/statusTindak/{akun}', [PelanggarController::class, 'statusTindak'])->name('pelanggar.statusTindak');
     Route::resource('/admin/detailPelanggar', DetailPelanggaranController::class);
-
     Route::post('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 });
 

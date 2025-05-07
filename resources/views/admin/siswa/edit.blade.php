@@ -1,93 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Latihan Laravel 10</title>
-  <style type="text/css">
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0px;
-    }
-    table, th, td {
-      border: 1px solid;
-    }
-  </style>
-</head>
-<body>
-  <h1>Edit Siswa</h1>
-  <a href="{{ route('siswa.index') }}">Kembali</a><br><br>
+@extends('mainLayouts')
 
-  @if ($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
+@section('content')
+<div class="container mt-4">
+    <h1 class="mb-4">Edit Siswa</h1>
+    <a href="{{ route('siswa.index') }}" class="btn btn-secondary mb-3">Kembali</a>
 
-  <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-    <h2>Data Siswa</h2>
+    <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data" class="">
+        @csrf
+        @method('PUT')
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="mb-3">Data Siswa</h4>
 
-    <label>Foto Siswa</label><br>
-    <img src="{{ asset('storage/siswas/' . $siswa->image) }}" width="120px" height="120px" alt=""><br>
-    <input type="file" name="image" accept="image/*">
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">Foto Siswa</label><br>
+            <img src="{{ asset('storage/siswas/' . $siswa->image) }}" width="120" height="120" alt="Foto Siswa" class="mb-2">
+            <input type="file" name="image" class="form-control" accept="image/*">
+        </div>
 
-    <label>NIS Siswa</label><br>
-    <input type="text" name="nis" value="{{ old('nis', $siswa->nis) }}" required>
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">NIS</label>
+            <input type="text" name="nis" class="form-control" value="{{ old('nis', $siswa->nis) }}" required>
+        </div>
 
-    <label>Nama Lengkap</label> <br>
-    <input type="text" id="name" name="name" value="{{ old('name', $siswa->name) }}" required>
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name', $siswa->name) }}" required>
+        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Tingkatan</label>
+                    <select name="tingkatan" class="form-select" required>
+                        @foreach(['X', 'XI', 'XII'] as $tingkatan)
+                            <option value="{{ $tingkatan }}" {{ $siswa->tingkatan == $tingkatan ? 'selected' : '' }}>{{ $tingkatan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label">Jurusan</label>
+                    <select name="jurusan" class="form-select" required>
+                        @foreach(['TBSM', 'TJKT', 'PPLG', 'DKV', 'TOI'] as $jurusan)
+                            <option value="{{ $jurusan }}" {{ $siswa->jurusan == $jurusan ? 'selected' : '' }}>{{ $jurusan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label">Kelas</label>
+                    <select name="kelas" class="form-select" required>
+                        @foreach([1, 2, 3, 4] as $kelas)
+                            <option value="{{ $kelas }}" {{ $siswa->kelas == $kelas ? 'selected' : '' }}>{{ $kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label">No HP</label>
+                    <input type="text" name="hp" class="form-control" value="{{ old('hp', $siswa->hp) }}" required>
+                </div>
+        
+                <div class="mb-4">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select" required>
+                        <option value="1" {{ $siswa->status == 1 ? 'selected' : '' }}>Aktif</option>
+                        <option value="0" {{ $siswa->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                </div>
+        
+                <button type="submit" class="btn btn-primary">Simpan Data</button>
+                <button type="reset" class="btn btn-warning">Reset Form</button>
+            </div>
+        </div>
+        
 
-    <label>Tingkatan</label><br>
-    <select name="tingkatan" required>
-      <option {{ 'X' == $siswa->tingkatan ? 'selected' : '' }} value="X">X</option>
-      <option {{ 'XI' == $siswa->tingkatan ? 'selected' : '' }} value="XI">XI</option>
-      <option {{ 'XII' == $siswa->tingkatan ? 'selected' : '' }} value="XII">XII</option>
-    </select>
-    <br><br>
-
-    <label>Jurusan</label><br>
-    <select name="jurusan" required>
-      <option {{ 'TBSM' == $siswa->jurusan ? 'selected' : '' }} value="TBSM">TBSM</option>
-      <option {{ 'TJKT' == $siswa->jurusan ? 'selected' : '' }} value="TJKT">TJKT</option>
-      <option {{ 'PPLG' == $siswa->jurusan ? 'selected' : '' }} value="PPLG">PPLG</option>
-      <option {{ 'DKV' == $siswa->jurusan ? 'selected' : '' }} value="DKV">DKV</option>
-      <option {{ 'TOI' == $siswa->jurusan ? 'selected' : '' }} value="TOI">TOI</option>
-    </select>
-    <br><br>
-
-    <label>Kelas</label><br>
-    <select name="kelas" required>
-      <option {{ '1' == $siswa->kelas ? 'selected' : '' }} value="1">1</option>
-      <option {{ '2' == $siswa->kelas ? 'selected' : '' }} value="2">2</option>
-      <option {{ '3' == $siswa->kelas ? 'selected' : '' }} value="3">3</option>
-      <option {{ '4' == $siswa->kelas ? 'selected' : '' }} value="4">4</option>
-    </select>
-    <br><br>
-
-    <label>No Hp</label><br>
-    <input type="text" name="hp" value="{{ old('hp', $siswa->hp) }}" required>
-    <br><br>
-
-    <label>Status</label><br>
-    <select name="status" required>
-      <option {{ '1' == $siswa->status ? 'selected' : '' }} value="1">Aktif</option>
-      <option {{ '0' == $siswa->status ? 'selected' : '' }} value="0">Tidak Aktif</option>
-    </select>
-    <br><br>
-
-    <button type="submit">SIMPAN DATA</button>
-    <button type="reset">RESET FORM</button>
-  </form>
-</body>
-</html>
+       
+    </form>
+</div>
+@endsection

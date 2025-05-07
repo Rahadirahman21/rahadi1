@@ -160,7 +160,7 @@ class PelanggarController extends Controller
             'id_pelanggaran' => $request->id_pelanggaran,
             'status' => 0
         ]);
-        $this->updatePoin($request->id_Pelanggaran, $request->id_pelanggar);
+        $this->updatePoin($request->id_pelanggaran, $request->id_pelanggar);
 
         return redirect()->route('detailPelanggar.show', $request->id_pelanggar)->with(['success' => 'Data Berhasil Disimpan!']);
     }
@@ -176,8 +176,8 @@ class PelanggarController extends Controller
     }
     function calculatedPoin(string $id_pelanggaran, string $id_pelanggar)
     {
-        $poin_pelanggaran = DB::table('pelanggarans')->where('id', $id_pelanggaran)->values('poin');
-        $poin_pelanggar = DB::table('pelanggars')->where('id', $id_pelanggar)->values('poin_pelanggar');
+        $poin_pelanggaran = DB::table('pelanggarans')->where('id', $id_pelanggaran)->value('poin');
+        $poin_pelanggar = DB::table('pelanggars')->where('id', $id_pelanggar)->value('poin_pelanggar');
         $poin = $poin_pelanggar + $poin_pelanggaran;
 
         return $poin;

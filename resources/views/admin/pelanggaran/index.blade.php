@@ -1,30 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pelanggaran</title>
-</head>
-<body>
+@extends('mainLayouts')
+
+@section('content')
+<div class="container mt-4">
     <h1>Data Pelanggaran</h1>
-    <a href="{{ route('admin.dashboard') }}">Menu Utama</a>
-    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-    <br><br>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-    
-    <br><br>
-    
-    <form action="" method="get">
+
+    <div class="mb-3">
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Menu Utama</a>
+        {{-- <a href="{{ route('logout') }}" class="btn btn-danger"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+           Logout
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form> --}}
+    </div>
+
+    <form action="" method="get" class="mb-4">
         <label for="cari">Cari:</label>
-        <input type="text" name="cari" id="cari">
-        <input type="submit" value="Cari">
+        <input type="text" name="cari" id="cari" value="{{ request('cari') }}">
+        <input type="submit" value="Cari" class="btn btn-sm btn-info">
     </form>
-    
-    <br><br>
-    
-    <a href="{{ route('pelanggaran.create') }}">Tambah Pelanggaran</a>
+
+    <a href="{{ route('pelanggaran.create') }}" class="btn btn-success mb-3">Tambah Pelanggaran</a>
 
     @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
@@ -32,7 +29,7 @@
         </div>
     @endif
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Jenis</th>
@@ -48,27 +45,30 @@
                 <td>{{ $pelanggaran->konsekuensi }}</td>
                 <td>{{ $pelanggaran->poin }}</td>
                 <td>
-                    <form onsubmit="return confirm('Apakah Anda Yakin?');" action="{{ route('pelanggaran.destroy',$pelanggaran->id) }}" method="POST" style="display:inline;">
-                        <a href="{{ route('pelanggaran.edit' , $pelanggaran->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                    <a href="{{ route('pelanggaran.edit', $pelanggaran->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+
+                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');"
+                          action="{{ route('pelanggaran.destroy', $pelanggaran->id) }}"
+                          method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">HAPUS</button>
+                        <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                     </form>
                 </td>
             </tr>
             @empty
             <tr>
-                <td>
+                <td colspan="4" class="text-center">
                     <p>Data tidak ditemukan</p>
+                    <a href="{{ route('pelanggaran.index') }}" class="btn btn-link">Kembali</a>
                 </td>
             </tr>
-            <td>
-                <a href="{{ route('pelanggaran.index') }}">Kembali</a>
-            </td>
             @endforelse
         </tbody>
     </table>
 
-    {{ $pelanggarans->links() }}
-</body>
-</html>
+    <div class="mt-3">
+        {{ $pelanggarans->links() }}
+    </div>
+</div>
+@endsection

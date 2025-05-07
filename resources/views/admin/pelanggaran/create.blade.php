@@ -1,41 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tambah Pelanggaran</title>
-</head>
+@extends('mainLayouts')
 
-<body>
-   <h1>Tambah Pelanggaran</h1>
-   <br><br>
-   <a href="{{ route('pelanggaran.index') }}">Kembali</a><br><br>
+@section('content')
+<div class="container mt-4">
+    <h1 class="mb-4">Tambah Pelanggaran</h1>
+    <a href="{{ route('pelanggaran.index') }}" class="btn btn-secondary mb-3">Kembali</a>
 
-   @if ($errors->any())
-   <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{$error}}</li>
-      @endforeach
-    </ul>
-   </div>
-   @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-   <form action="{{ route('pelanggaran.store')}}" method="POST" >
-    @csrf 
-    <label>Jenis Kelamin</label><br>
-    <textarea id="jenis" name="jenis" rows="7" cols="50" value="{{old('jenis')}}"></textarea>
-    <br><br>
+    <form action="{{ route('pelanggaran.store') }}" method="POST">
+        @csrf
 
-    <label>Konsekuensi</label><br>
-    <textarea id="konsekuensi" name="konsekuensi" rows="7" cols="50" value="{{old('konsekuensi')}}"></textarea>
-    <br><br>
+        <div class="mb-4">
+            <h4 class="fw-bold">Detail Pelanggaran</h4>
 
-    <label>poin</label><br>
-    <input type="text" name="poin" id="poin" value="{{old('poin') }}"><br>
-    <br><br>
+            <div class="mb-3">
+                <label for="jenis" class="form-label">Jenis Pelanggaran</label>
+                <textarea id="jenis" name="jenis" rows="7" cols="50" class="form-control" required>{{ old('jenis') }}</textarea>
+            </div>
 
-     <input type="submit" value="Register">
-   </form>
-</body>
-</html>
+            <div class="mb-3">
+                <label for="konsekuensi" class="form-label">Konsekuensi</label>
+                <textarea id="konsekuensi" name="konsekuensi" rows="7" cols="50" class="form-control" required>{{ old('konsekuensi') }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="poin" class="form-label">Poin</label>
+                <input type="number" name="poin" id="poin" class="form-control" value="{{ old('poin') }}" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Simpan Data</button>
+            <button type="reset" class="btn btn-warning">Reset Form</button>
+        </div>
+    </form>
+</div>
+@endsection

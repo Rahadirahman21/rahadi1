@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Show Detail Pelanggaran</title>
+@extends('mainLayouts')
+
+@section('content')
     <style type="text/css">
         table {
             border-collapse: collapse;
@@ -17,10 +14,9 @@
             text-align: left;
         }
     </style>
-</head>
-<body>
+    <div class="container">
     <h1>Data Pelanggar</h1>
-    <a href="{{ route('pelanggar.index') }}">Kembali</a>
+    <a href="{{ route('pelanggar.index') }}" class="btn btn-secondary">Kembali</a>
 
     <table>
         <tr>
@@ -78,14 +74,14 @@
     @endif
 
     @if ($pelanggar->status == 0 || $pelanggar->status == 1)
-        <button onclick="myFunction()">Tambah Pelanggaran</button>
+        <button onclick="myFunction()" class="btn btn-success">Tambah Pelanggaran</button>
         <script>
             function myFunction() {
                 alert("Poin Pelanggar Sudah Mencapai {{ $pelanggar->poin_pelanggar }} Poin, Pelanggar Perlu Ditindak!");
             }
         </script>
     @else
-        <a href="{{ route('pelanggar.show', $pelanggar->id) }}">Tambah Pelanggaran</a>
+        <a href="{{ route('pelanggar.show', $pelanggar->id) }}" >Tambah Pelanggaran</a>
     @endif
 
     <table class="tabel">
@@ -111,7 +107,7 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id_pelanggar" value="{{ $detail->id_pelanggar }}">
-                            <button type="submit">Beri Sanksi</button>
+                            <button type="submit" class="btn btn-warning text-white">Beri Sanksi</button>
                         </form>
                     @else
                         <b>Sudah Diberikan Sanksi</b>
@@ -123,7 +119,7 @@
                         @method('DELETE')
                         <input type="hidden" name="id_pelanggar" value="{{ $detail->id_pelanggar }}">
                         <input type="hidden" name="PoinPelanggaran" value="{{ $detail->poin }}">
-                        <button type="submit">Hapus Pelanggaran</button>
+                        <button type="submit" class="btn btn-danger">Hapus Pelanggaran</button>
                     </form>
                 </td>
             </tr>
@@ -140,6 +136,6 @@
     </table>
 
     {{ $details->links() }}
+</div>
 
-</body>
-</html>
+@endsection
