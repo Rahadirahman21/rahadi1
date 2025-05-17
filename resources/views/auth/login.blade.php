@@ -5,10 +5,10 @@
 <div class="container-fluid">
     <div class="row">
       <div class="col"id="logo">
-        <h1 class="title">E-Point Siswa</h1>
+        <h1 class="title text-white">E-Point Siswa</h1>
         <img src="{{ asset('storage/logo.png') }}" alt="Foto"class="rounded mx-auto d-block">
         {{-- <a href="{{ route('register') }}">Register</a> --}}
-        <h3 class="school-name">SMKN 4 TASIKMALAYA</h3>
+        <h3 class="school-name  text-white">SMKN 4 TASIKMALAYA</h3>
       </div>
       <div class="col login">
         <h1 class="title">Login</h1>

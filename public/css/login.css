@@ -65,7 +65,7 @@ label {
     margin-top: 10px;
 }
 
-/* input[type="email"], input[type="password"] {
+input[type="email"], input[type="password"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -73,12 +73,12 @@ label {
     border-bottom: 2px solid black;
     outline: none;
     font-size: 16px;
-} */
+}
 
 /* Fokus pada input */
-/* input[type="email"]:focus, input[type="password"]:focus {
+input[type="email"]:focus, input[type="password"]:focus {
     border-bottom: 2px solid #007bff;
-} */
+}
 
 /* Styling forgot password link */
 .forgot-password {

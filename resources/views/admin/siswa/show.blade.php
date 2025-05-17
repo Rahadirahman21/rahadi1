@@ -15,11 +15,52 @@
     .centered {
       text-align: center;
     }
-  </style>
+    </style>
 <div class="container">
-
   <h1>Detail Siswa</h1>
   <a href="{{ route('siswa.index') }}" class="btn btn-secondary mb-3">Kembali</a>
+  <table class="table">
+    <table>
+      <tr>
+        <img src="{{ asset('storage/siswas/' . $siswa->image) }}" width="120px" height="120px" alt="Foto Siswa">
+      </tr>
+    </table>
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Job</th>
+            <th>Favorite Color</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr>
+            <th>1</th>
+            <td>Cy Ganderton</td>
+            <td>Quality Control Specialist</td>
+            <td>Blue</td>
+          </tr>
+          <!-- row 2 -->
+          <tr>
+            <th>2</th>
+            <td>Hart Hagerty</td>
+            <td>Desktop Support Technician</td>
+            <td>Purple</td>
+          </tr>
+          <!-- row 3 -->
+          <tr>
+            <th>3</th>
+            <td>Brice Swyre</td>
+            <td>Tax Accountant</td>
+            <td>Red</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   
   <table class="table">
     <tr>

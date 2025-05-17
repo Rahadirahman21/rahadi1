@@ -1,72 +1,65 @@
 @extends('mainLayouts')
 
 @section('content')
-<div class="container mt-4">
-    <h1>Data User</h1>
+<div class="p-5">
+    <h1 class="text-2xl font-bold text-center mb-5">Data User</h1>
 
-    <div class="mb-3">
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Menu Utama</a>
-        {{-- <a href="{{ route('logout') }}" class="btn btn-danger"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            Logout
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form> --}}
+    {{-- Form Pencarian dan Tambah User --}}
+    <div class="flex flex-col lg:flex-row justify-between items-center mb-4 gap-2">
+        <form action="" method="get" class="flex items-center gap-2 w-full lg:w-1/2">
+            <input type="text" name="cari" id="cari" class="input p-2 w-full border border-gray-300 rounded" placeholder="Nama atau Email">
+            <button type="submit" class="btn bg-blue-500 text-white px-4 py-2 rounded">Cari</button>
+        </form>
+
+        <a href="{{ route('akun.create') }}" class="btn bg-green-500 text-white px-4 py-2 rounded">Tambah User</a>
     </div>
 
-    <form action="" method="get" class="mb-4">
-        <div class="form-group">
-            <label for="cari">Cari:</label>
-            <input type="text" name="cari" id="cari" class="form-control d-inline-block w-25" placeholder="Nama atau Email">
-            <button type="submit" class="btn btn-primary">Cari</button>
-        </div>
-    </form>
-
-    <a href="{{ route('akun.create') }}" class="btn btn-success mb-3">Tambah User</a>
-
+    {{-- Notifikasi Sukses --}}
     @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mb-4">
             {{ Session::get('success') }}
         </div>
     @endif
 
-    <table class="table table-bordered">
-        <thead class="thead-light">
-            <tr>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($users as $user)
-            <tr>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ ucfirst($user->usertype) }}</td>
-                <td>
-                    <a href="{{ route('akun.edit', $user->id) }}" class="btn btn-sm btn-primary">Edit</a>
+    {{-- Tabel Data User --}}
+    <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Nama</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Email</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Role</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($users as $user)
+                <tr class="bg-white hover:bg-gray-50 text-center border">
+                    <td class="p-3 border">{{ $user->name }}</td>
+                    <td class="p-3 border">{{ $user->email }}</td>
+                    <td class="p-3 border">{{ ucfirst($user->usertype) }}</td>
+                    <td class="p-3 border space-x-1">
+                        <a href="{{ route('akun.edit', $user->id) }}" class="btn btn-sm bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
 
-                    <form action="{{ route('akun.destroy', $user->id) }}" method="POST"
-                          onsubmit="return confirm('{{ $user->usertype == 'siswa' ? 'Jika Akun Siswa Dihapus Maka Data Siswa Akan Ikut Terhapus, Apakah Anda Yakin?' : 'Apakah Anda Yakin?' }}');"
-                          style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="4" class="text-center">Data tidak ditemukan</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+                        <form action="{{ route('akun.destroy', $user->id) }}" method="POST" class="inline"
+                              onsubmit="return confirm('{{ $user->usertype == 'siswa' ? 'Jika Akun Siswa Dihapus Maka Data Siswa Akan Ikut Terhapus, Apakah Anda Yakin?' : 'Apakah Anda Yakin?' }}');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm bg-red-500 text-white px-3 py-1 rounded">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center py-4">Data tidak ditemukan.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
-    <div class="mt-3">
+    {{-- Pagination --}}
+    <div class="mt-4">
         {{ $users->links() }}
     </div>
 </div>
