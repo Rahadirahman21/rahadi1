@@ -24,49 +24,43 @@
         </div>
     @endif
 
-    {{-- Tabel Data --}}
-    <div class="overflow-x-auto">
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
-                    <th class="p-3 border">Jenis</th>
-                    <th class="p-3 border">Konsekuensi</th>
-                    <th class="p-3 border">Poin</th>
-                    <th class="p-3 border">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pelanggarans as $pelanggaran)
-                <tr class="bg-white hover:bg-gray-50 text-center">
-                    <td class="p-3 border">{{ $pelanggaran->jenis }}</td>
-                    <td class="p-3 border">{{ $pelanggaran->konsekuensi }}</td>
-                    <td class="p-3 border">{{ $pelanggaran->poin }}</td>
-                    <td class="p-3 border space-x-2">
-                        <a href="{{ route('pelanggaran.edit', $pelanggaran->id) }}"
-                           class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
-                            Edit
-                        </a>
-                        <form action="{{ route('pelanggaran.destroy', $pelanggaran->id) }}" method="POST" class="inline"
-                              onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="text-center py-4">
-                        <p>Data tidak ditemukan.</p>
-                        <a href="{{ route('pelanggaran.index') }}" class="text-blue-600 underline">Kembali</a>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+    {{-- Tabel Data Pelanggaran --}}
+<div class="overflow-x-auto rounded-lg shadow-lg">
+    <table class="table table-zebra w-full">
+        <thead class="bg-blue-500 text-primary-content">
+            <tr>
+                <th class="text-center">Jenis</th>
+                <th class="text-center">Konsekuensi</th>
+                <th class="text-center">Poin</th>
+                <th class="text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($pelanggarans as $pelanggaran)
+            <tr class="hover:bg-primary/10 transition-colors text-center">
+                <td>{{ $pelanggaran->jenis }}</td>
+                <td>{{ $pelanggaran->konsekuensi }}</td>
+                <td class="font-bold text-error">{{ $pelanggaran->poin }}</td>
+                <td class="space-x-1">
+                    <a href="{{ route('pelanggaran.edit', $pelanggaran->id) }}"
+                       class="btn btn-sm btn-outline btn-warning hover:btn-warning">Edit</a>
+                    <form action="{{ route('pelanggaran.destroy', $pelanggaran->id) }}" method="POST" class="inline"
+                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline btn-error hover:btn-error">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4" class="text-center py-8 italic text-gray-400">Data tidak ditemukan</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
 
     {{-- Pagination --}}
     <div class="mt-4">

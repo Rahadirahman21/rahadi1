@@ -22,41 +22,43 @@
     @endif
 
     {{-- Tabel Data User --}}
-    <div class="overflow-x-auto">
-        <table class="w-full border-collapse">
-            <thead>
-                <tr>
-                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Nama</th>
-                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Email</th>
-                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Role</th>
-                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($users as $user)
-                <tr class="bg-white hover:bg-gray-50 text-center border">
-                    <td class="p-3 border">{{ $user->name }}</td>
-                    <td class="p-3 border">{{ $user->email }}</td>
-                    <td class="p-3 border">{{ ucfirst($user->usertype) }}</td>
-                    <td class="p-3 border space-x-1">
-                        <a href="{{ route('akun.edit', $user->id) }}" class="btn btn-sm bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
+<div class="overflow-x-auto rounded-lg shadow-lg">
+    <table class="table table-zebra w-full">
+        <thead class="bg-blue-500 text-primary-content">
+            <tr>
+                <th class="text-center">Nama</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Role</th>
+                <th class="text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($users as $user)
+            <tr class="hover:bg-primary/10 transition-colors text-center">
+                <td class="font-semibold">{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ ucfirst($user->usertype) }}</td>
+                <td class="space-x-1">
+                    <a href="{{ route('akun.edit', $user->id) }}"
+                       class="btn btn-sm btn-outline btn-warning hover:btn-warning">Edit</a>
 
-                        <form action="{{ route('akun.destroy', $user->id) }}" method="POST" class="inline"
-                              onsubmit="return confirm('{{ $user->usertype == 'siswa' ? 'Jika Akun Siswa Dihapus Maka Data Siswa Akan Ikut Terhapus, Apakah Anda Yakin?' : 'Apakah Anda Yakin?' }}');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm bg-red-500 text-white px-3 py-1 rounded">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="text-center py-4">Data tidak ditemukan.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                    <form action="{{ route('akun.destroy', $user->id) }}" method="POST" class="inline"
+                          onsubmit="return confirm('{{ $user->usertype == 'siswa' ? 'Jika Akun Siswa Dihapus Maka Data Siswa Akan Ikut Terhapus, Apakah Anda Yakin?' : 'Apakah Anda Yakin?' }}');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline btn-error hover:btn-error">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4" class="text-center py-8 italic text-gray-400">Data tidak ditemukan</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
 
     {{-- Pagination --}}
     <div class="mt-4">

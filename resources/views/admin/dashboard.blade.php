@@ -25,7 +25,7 @@
 
 
     {{-- Statistik Cards --}}
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16 max-w-4xl mx-auto">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16 max-w-xl mx-auto">
         <div class="card bg-primary text-primary-content shadow-xl transition-transform transform hover:scale-105">
             <div class="card-body text-center">
                 <h2 class="card-title text-lg mb-2">Jumlah Siswa</h2>
@@ -107,7 +107,7 @@
                     <tr class="hover:bg-primary/10 transition-colors">
                         <td class="font-semibold">{{ $hit->jenis }}</td>
                         <td>{{ $hit->konsekuensi }}</td>
-                        <td class="text-yellow-500 font-bold">{{ $hit->poin }}</td>
+                        <td class="text-red-500 font-bold">{{ $hit->poin }}</td>
                         <td class="font-bold">{{ $hit->totals }}</td>
                     </tr>
                     @empty

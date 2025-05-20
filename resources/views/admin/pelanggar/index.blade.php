@@ -24,69 +24,70 @@
         </div>
     @endif
 
-    {{-- Tabel Pelanggar --}}
-    <div class="overflow-x-auto">
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-200 text-gray-700 text-sm uppercase">
-                    <th class="p-3 border">Foto</th>
-                    <th class="p-3 border">NIS</th>
-                    <th class="p-3 border">Nama</th>
-                    <th class="p-3 border">Kelas</th>
-                    <th class="p-3 border">No HP</th>
-                    <th class="p-3 border">Poin</th>
-                    <th class="p-3 border">Status</th>
-                    <th class="p-3 border">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pelanggars as $pelanggar)
-                <tr class="bg-white hover:bg-gray-50 text-center">
-                    <td class="p-3 border">
-                        <img src="{{ asset('storage/siswas/' . $pelanggar->image) }}" alt="Foto Siswa" class="mx-auto rounded shadow" width="80">
-                    </td>
-                    <td class="p-3 border">{{ $pelanggar->nis }}</td>
-                    <td class="p-3 border">{{ $pelanggar->name }}</td>
-                    <td class="p-3 border">{{ $pelanggar->tingkatan }} {{ $pelanggar->jurusan }} {{ $pelanggar->kelas }}</td>
-                    <td class="p-3 border">{{ $pelanggar->hp }}</td>
-                    <td class="p-3 border">{{ $pelanggar->poin_pelanggar }}</td>
-                    <td class="p-3 border">
-                        @if ($pelanggar->status == 0)
-                            <span class="text-green-600 font-medium">Tidak Perlu Ditindak</span>
-                        @elseif ($pelanggar->status == 1)
-                            <form action="{{ route('pelanggar.statusTindak', $pelanggar->id) }}" method="POST"
-                                  onsubmit="return confirm('Apakah Anda yakin {{ $pelanggar->name }} sudah ditindak?');">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
-                                    Perlu Ditindak
-                                </button>
-                            </form>
-                        @elseif ($pelanggar->status == 2)
-                            <span class="text-blue-600 font-medium">Sudah Ditindak</span>
-                        @endif
-                    </td>
-                    <td class="p-3 border space-x-2">
-                        <a href="{{ route('detailPelanggar.show', $pelanggar->id) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Detail</a>
-                        <form action="{{ route('pelanggar.destroy', $pelanggar->id) }}" method="POST" class="inline"
-                              onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
+    {{-- Tabel Data Pelanggar --}}
+<div class="overflow-x-auto rounded-lg shadow-lg">
+    <table class="table table-zebra w-full">
+        <thead class="bg-blue-500 text-primary-content text-sm">
+            <tr>
+                <th class="text-center">Foto</th>
+                <th class="text-center">NIS</th>
+                <th class="text-center">Nama</th>
+                <th class="text-center">Kelas</th>
+                <th class="text-center">No HP</th>
+                <th class="text-center">Poin</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($pelanggars as $pelanggar)
+            <tr class="hover:bg-primary/10 transition-colors text-center">
+                <td>
+                    <div class="avatar mx-auto">
+                        <div class="w-16 h-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <img src="{{ asset('storage/siswas/' . $pelanggar->image) }}" alt="Foto Siswa" />
+                        </div>
+                    </div>
+                </td>
+                <td>{{ $pelanggar->nis }}</td>
+                <td class="font-semibold">{{ $pelanggar->name }}</td>
+                <td>{{ $pelanggar->tingkatan }} {{ $pelanggar->jurusan }} {{ $pelanggar->kelas }}</td>
+                <td>{{ $pelanggar->hp }}</td>
+                <td class="font-bold text-error">{{ $pelanggar->poin_pelanggar }}</td>
+                <td>
+                    @if ($pelanggar->status == 0)
+                        <span class="text-green-600 font-medium">Tidak Perlu Ditindak</span>
+                    @elseif ($pelanggar->status == 1)
+                        <form action="{{ route('pelanggar.statusTindak', $pelanggar->id) }}" method="POST"
+                              onsubmit="return confirm('Apakah Anda yakin {{ $pelanggar->name }} sudah ditindak?');">
                             @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Hapus</button>
+                            @method('PUT')
+                            <button type="submit" class="btn btn-sm btn-warning">Perlu Ditindak</button>
                         </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="8" class="text-center py-4">
-                        <p>Data Tidak Ditemukan</p>
-                        <a href="{{ route('pelanggar.index') }}" class="text-blue-600 underline">Kembali</a>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                    @elseif ($pelanggar->status == 2)
+                        <span class="text-blue-600 font-medium">Sudah Ditindak</span>
+                    @endif
+                </td>
+                <td class="space-x-1">
+                    <a href="{{ route('detailPelanggar.show', $pelanggar->id) }}"
+                       class="btn btn-sm btn-outline btn-primary hover:btn-primary">Detail</a>
+                    <form action="{{ route('pelanggar.destroy', $pelanggar->id) }}" method="POST" class="inline"
+                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline btn-error hover:btn-error">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="8" class="text-center py-8 italic text-gray-400">Data Tidak Ditemukan</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
 
     {{-- Pagination --}}
     <div class="mt-5">

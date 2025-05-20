@@ -16,7 +16,7 @@
 <!-- page -->
 <main class="min-h-screen w-full bg-gray-100 text-gray-700" x-data="layout">
     <!-- header page -->
-    <header class="flex w-full items-center justify-between border-b-2 bg-blue-500 border-gray-200  p-2" >
+    <header class="flex w-full bg-gradient-to-r from-blue-500 to-teal-400 items-center justify-between border-b-2  border-gray-200  p-2" >
         <!-- logo -->
         <div class="flex items-center space-x-2">
             <button type="button" class="text-3xl" @click="asideOpen = !asideOpen"><i class="bx bx-menu text-white"></i></button>
@@ -29,42 +29,42 @@
 
     <div class="flex h-[1000] " >
         <!-- aside -->
-        <aside class="min-h-screen flex w-72 flex-col space-y-2 border-r-2 border-gray-200 p-2 bg-blue-500" style="height: 90.5vh"
-            x-show="asideOpen" >
-            <a href="{{ route('admin.dashboard')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600 ">
-                <span class="text-2xl"><i class="bx bx-home text-white"></i></span>
-                <span class="text-white">Dashboard</span>
-            </a>
+        <aside class="min-h-screen flex w-72 flex-col space-y-2 border-r-2 border-gray-200 p-2 bg-gradient-to-t from-teal-400 via-sky-500 to-blue-500" style="height: 90.5vh"
+    x-show="asideOpen" >
+    <a href="{{ route('admin.dashboard')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white ">
+        <span class="text-2xl"><i class="bx bx-home text-white"></i></span>
+        <span class="text-white">Dashboard</span>
+    </a>
 
-            <a href="{{ route('siswa.index')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600">
-                <span class="text-2xl"><i class="bx bx-cart text-white"></i></span>
-                <span class="text-white">Data Siswa</span>
-            </a>
+    <a href="{{ route('siswa.index')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white">
+        <span class="text-2xl"><i class="bx bx-group text-white"></i></span> <!-- Icon untuk Data Siswa -->
+        <span class="text-white">Data Siswa</span>
+    </a>
 
-            <a href="{{ route('akun.index')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600">
-                <span class="text-2xl "><i class="bx bx-shopping-bag text-white"></i></span>
-                <span class="text-white">Data Akun</span>
-            </a>
+    <a href="{{ route('akun.index')}}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white">
+        <span class="text-2xl"><i class="bx bx-user-circle text-white"></i></span> <!-- Icon untuk Data Akun -->
+        <span class="text-white">Data Akun</span>
+    </a>
 
-            <a href="{{ route('pelanggaran.index') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600">
-                <span class="text-2xl"><i class='bx bx-book text-white'></i></i></span>
-                <span class="text-white">Data Pelanggaran</span>
-            </a>
+    <a href="{{ route('pelanggaran.index') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white">
+        <span class="text-2xl"><i class='bx bx-book-bookmark text-white'></i></span> <!-- Icon untuk Data Pelanggaran -->
+        <span class="text-white">Data Pelanggaran</span>
+    </a>
 
-            <a href="{{ route('pelanggar.index') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600">
-                <span class="text-2xl"><i class="bx bx-user text-white"></i></span>
-                <span class="text-white">Data Pelanggar</span>
-            </a>
-            <a href="{{ route('logout') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-blue-600"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              <span class="text-2xl"><i class="bx bx-logout text-white"></i></span>
-              <span class="text-white">Logout</span>
-          </a>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf 
-          </form>
-            
-            
-        </aside>
+    <a href="{{ route('pelanggar.index') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white">
+        <span class="text-2xl"><i class="bx bx-user text-white"></i></span> <!-- Icon untuk Data Pelanggar -->
+        <span class="text-white">Data Pelanggar</span>
+    </a>
+
+    <a href="{{ route('logout') }}" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-blue-600 hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <span class="text-2xl"><i class="bx bx-log-out text-white"></i></span> <!-- Perbaikan icon logout -->
+        <span class="text-white">Logout</span>
+    </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf 
+    </form>
+</aside>
+
 
         <!-- main content page -->
         <div class="w-full bg-white">@yield('content')</div>
